@@ -1,0 +1,16 @@
+.dashboard-main__wrapper{
+    padding: 20px;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.dashboard-main__wrapper .card__wrapper{
+    box-shadow: 0px 0px 2px black;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 200px;
+    cursor: pointer;
+}
