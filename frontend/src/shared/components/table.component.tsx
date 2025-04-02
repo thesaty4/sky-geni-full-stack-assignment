@@ -12,9 +12,10 @@ import { useMemo, useState } from "react";
 import { SharedTableProps } from "../types/table.type";
 
 const SharedTable = <T extends Record<string, string>>({
-  data,
+  headers,
+  dataList,
 }: SharedTableProps<T>) => {
-  const defaultOrderBy = data.headers.length > 0 ? data.headers[0] : "";
+  const defaultOrderBy = headers.length > 0 ? headers[0].fieldName : "";
   const [order, setOrder] = useState<"asc" | "desc">("asc");
   const [orderBy, setOrderBy] = useState<string>(defaultOrderBy);
 
@@ -24,7 +25,7 @@ const SharedTable = <T extends Record<string, string>>({
   };
 
   const sortedRows = useMemo(() => {
-    return [...data.rows].sort((a, b) => {
+    return [...dataList].sort((a, b) => {
       const aValue = a[orderBy] ?? "";
       const bValue = b[orderBy] ?? "";
 
@@ -36,21 +37,21 @@ const SharedTable = <T extends Record<string, string>>({
         ? String(aValue).localeCompare(String(bValue))
         : String(bValue).localeCompare(String(aValue));
     });
-  }, [data.rows, order, orderBy]);
+  }, [dataList, order, orderBy]);
 
   return (
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
-            {data.headers.map((header) => (
-              <TableCell key={header}>
+            {headers.map((header) => (
+              <TableCell key={header.fieldName}>
                 <TableSortLabel
-                  active={orderBy === header}
-                  direction={orderBy === header ? order : "asc"}
-                  onClick={() => handleSort(header)}
+                  active={orderBy === header.fieldName}
+                  direction={orderBy === header.fieldName ? order : "asc"}
+                  onClick={() => handleSort(header.fieldName)}
                 >
-                  {header}
+                  {header.label}
                 </TableSortLabel>
               </TableCell>
             ))}
@@ -59,11 +60,11 @@ const SharedTable = <T extends Record<string, string>>({
         <TableBody>
           {sortedRows.map((row, index) => (
             <TableRow key={index}>
-              {data.headers.map((header) => (
-                <TableCell key={header}>
-                  {typeof row[header] === "number"
-                    ? row[header].toLocaleString()
-                    : String(row[header])}
+              {headers.map((header) => (
+                <TableCell key={header.fieldName}>
+                  {typeof row[header.fieldName] === "number"
+                    ? row[header.fieldName].toLocaleString()
+                    : String(row[header.fieldName])}
                 </TableCell>
               ))}
             </TableRow>

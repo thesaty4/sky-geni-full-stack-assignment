@@ -1,6 +1,6 @@
 .dashboard-main__wrapper{
     padding: 20px;
-    height: 100vh;
+    height: calc(100vh - 150px);
     align-items: center;
     justify-content: center;
     display: flex;

@@ -1,6 +1,6 @@
 import { CssBaseline, Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import "./Dashboard.style.css";
+import "./dashboard.style.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();

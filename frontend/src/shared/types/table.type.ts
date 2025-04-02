@@ -1,8 +1,9 @@
-export interface TableData<T> {
-  headers: string[];
-  rows: T[];
-}
+export type TableHeaderType = {
+  label: string;
+  fieldName: string;
+};
 
 export interface SharedTableProps<T> {
-  data: TableData<T>;
+  headers: TableHeaderType[];
+  dataList: T[];
 }

@@ -1,8 +1,8 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import ChartInfo from "./pages/chart-info/ChartInfo";
-import Dashboard from "./pages/dashboard/Dashboard";
-import DashboardLayout from "./pages/dashboard/DashboardLayout";
-import NotFound from "./pages/page-not-found/PageNotFound";
+import ChartInfo from "./pages/chart-info/chart-info";
+import Dashboard from "./pages/dashboard/dashboard";
+import DashboardLayout from "./pages/dashboard/dashboard-layout";
+import NotFound from "./pages/page-not-found/pnf";
 
 function App() {
   return (
