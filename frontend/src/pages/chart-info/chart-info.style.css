@@ -1,0 +1,18 @@
+.main__wrapper{
+    padding: 50px;
+}
+
+.top__wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin:  50px 0;
+}
+
+.bottom__wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}

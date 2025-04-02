@@ -1,41 +1,46 @@
-import { CssBaseline, Grid, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { CssBaseline } from "@mui/material";
+import MultiCardGrid, {
+  CardListType,
+} from "../../shared/components/multi-card.component";
 import "./dashboard.style.css";
 
+const cardData: CardListType[] = [
+  {
+    title: "Customer Type",
+    description:
+      "Get a detailed classification of customers based on segments, preferences, and engagement levels.",
+    image: "/images/tech-chart.jpg",
+    routeTo: "customer-type",
+  },
+  {
+    title: "Account Industry",
+    description:
+      "View graphs and table data related to different account industries, providing valuable insights, Click to see account related info.",
+    image: "/images/chart.webp",
+    routeTo: "account-industry",
+  },
+  {
+    title: "ACV Range",
+    description:
+      "Analyze the Annual Contract Value (ACV) distribution across various accounts using graphical data.",
+    image: "/images/green-chart.jpg",
+    routeTo: "acv-range",
+  },
+
+  {
+    title: "Team",
+    description:
+      "Manage and oversee team structures, roles, and performance through insightful data visualizations.",
+    image: "/images/light-graph.webp",
+    routeTo: "team",
+  },
+];
+
 const Dashboard = () => {
-  const navigate = useNavigate();
-
-  // Data for cards
-  const cardData = [
-    { title: "User Info", path: "customer-type" },
-    { title: "Customer Info", path: "user-type" },
-    { title: "Orders", path: "orders" },
-    { title: "Settings", path: "settings" },
-  ];
-
   return (
     <div className="dashboard-main__wrapper">
       <CssBaseline />
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        {cardData.map(({ title, path }, index) => (
-          <Grid
-            size={6}
-            key={index}
-            component="div"
-            className="card__wrapper"
-            onClick={() => navigate(path)}
-          >
-            <Typography variant="h6" align="center">
-              {title}
-            </Typography>
-          </Grid>
-        ))}
-      </Grid>
-
-      <Grid container spacing={3} component="div">
-        {" "}
-        {/* Fix: Added `component="div"` */}
-      </Grid>
+      <MultiCardGrid cardList={cardData} />
     </div>
   );
 };

@@ -14,7 +14,7 @@ function App() {
       <Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<Dashboard />} />
         <Route path="customer-type" element={<ChartInfo />} />
-        <Route path="user-type" element={<ChartInfo />} />
+        <Route path="account-industry" element={<ChartInfo />} />
       </Route>
 
       {/* Catch All - 404 Page */}

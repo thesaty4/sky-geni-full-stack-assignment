@@ -1,5 +1,7 @@
+import { Box } from "@mui/material";
 import SharedTable from "../../shared/components/table.component";
 import { TableHeaderType } from "../../shared/types/table.type";
+import "./chart-info.style.css";
 
 const header: TableHeaderType[] = [
   {
@@ -24,7 +26,17 @@ const dataList = [
 ];
 
 const ChartInfo = () => {
-  return <SharedTable headers={header} dataList={dataList} />;
+  return (
+    <Box className="main__wrapper" component="div">
+      <Box className="top__wrapper" component="div">
+        <Box component="div">Left Graph </Box>
+        <Box component="div">Right Graph</Box>
+      </Box>
+      <Box className="bottom__wrapper" component="div">
+        <SharedTable headers={header} dataList={dataList} />
+      </Box>
+    </Box>
+  );
 };
 
 export default ChartInfo;
