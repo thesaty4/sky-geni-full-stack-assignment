@@ -25,6 +25,7 @@ const dataList = [
     price: "10000",
   },
 ];
+
 const stackedBarData = [
   {
     quarter: "2023-Q3",

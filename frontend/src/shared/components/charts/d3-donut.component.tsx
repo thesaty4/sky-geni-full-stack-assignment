@@ -39,7 +39,7 @@ const DonutChart: React.FC<DonutChartProps> = ({ data }) => {
 
     const width = 500,
       height = 500,
-      radius = Math.min(width, height) / 5;
+      radius = Math.min(width, height) / 3;
 
     const svg = d3
       .select(chartRef.current) // selecting current chart ref
