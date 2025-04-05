@@ -13,8 +13,7 @@ function App() {
       {/* Dashboard with Nested Routes */}
       <Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<Dashboard />} />
-        <Route path="customer-type" element={<ChartInfo />} />
-        <Route path="account-industry" element={<ChartInfo />} />
+        <Route path=":module" element={<ChartInfo />} /> {/* ✅ fixed */}
       </Route>
 
       {/* Catch All - 404 Page */}
