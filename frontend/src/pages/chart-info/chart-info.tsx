@@ -1,28 +1,116 @@
 import { Box } from "@mui/material";
 import D3Chart from "../../shared/components/charts/d3-chart.component";
-import SharedTable from "../../shared/components/table.component";
+import SharedTable from "../../shared/components/table/table.component";
 import { TableHeaderType } from "../../shared/types/table.type";
 import "./chart-info.style.css";
 
 const header: TableHeaderType[] = [
   {
-    label: "Name",
-    fieldName: "name",
+    label: "2023-Q3",
+    fieldName: "2023-Q3",
+    prefixText: "$",
+    children: [
+      {
+        label: "Count",
+        fieldName: "count",
+      },
+      {
+        label: "ACV",
+        fieldName: "acv",
+      },
+      {
+        label: "% of Total",
+        fieldName: "total",
+        postfixText: "%",
+      },
+    ],
   },
   {
-    label: "Name",
-    fieldName: "price",
+    label: "2023-Q4",
+    fieldName: "2023-Q4",
+    prefixText: "$",
+    children: [
+      {
+        label: "Count",
+        fieldName: "count",
+      },
+      {
+        label: "ACV",
+        fieldName: "acv",
+      },
+      {
+        label: "% of Total",
+        fieldName: "total",
+        postfixText: "%",
+      },
+    ],
+  },
+  {
+    label: "2023-Q5",
+    fieldName: "2023-Q5",
+    prefixText: "$",
+    children: [
+      {
+        label: "Count",
+        fieldName: "count",
+      },
+      {
+        label: "ACV",
+        fieldName: "acv",
+      },
+      {
+        label: "% of Total",
+        fieldName: "total",
+        postfixText: "%",
+      },
+    ],
+  },
+  {
+    label: "2023-Q6",
+    fieldName: "2023-Q6",
+    prefixText: "$",
+    children: [
+      {
+        label: "Count",
+        fieldName: "count",
+      },
+      {
+        label: "ACV",
+        fieldName: "acv",
+      },
+      {
+        label: "% of Total",
+        fieldName: "total",
+        postfixText: "%",
+      },
+    ],
   },
 ];
 
 const dataList = [
   {
-    name: "ab",
-    price: "10000",
+    "2023-Q3": {
+      count: 100,
+      acv: 5000,
+      total: 20,
+    },
+    "2023-Q4": {
+      count: 100,
+      acv: 5000,
+      total: 20,
+    },
   },
   {
-    name: "bc",
-    price: "10000",
+    "2023-Q3": {
+      count: 100,
+      acv: 5000,
+      total: 20,
+    },
+    "2023-Q4": {
+      count: 100,
+      acv: 5000,
+      total: 20,
+    },
   },
 ];
 
