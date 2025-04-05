@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 import React, { useEffect, useRef } from "react";
+import { formatNumberWithPostfix } from "../../utils/common.util";
 
 /**
  * Represents a single data point for the donut chart.
@@ -112,7 +113,9 @@ const DonutChart: React.FC<DonutChartProps> = ({ data }) => {
       .style("fill", "#333") // setting text color
       .text(
         (d) =>
-          `$${d.data.value}K (${Math.round((d.data.value / total) * 100)}%)`
+          `$${formatNumberWithPostfix(d.data.value)} (${Math.round(
+            (d.data.value / total) * 100
+          )}%)`
       );
 
     // Display total in center
@@ -122,7 +125,7 @@ const DonutChart: React.FC<DonutChartProps> = ({ data }) => {
       .attr("dy", "0.3em") // vertical alignment
       .style("font-size", "14px") // setting font size
       .style("font-weight", "bold") // making text bold
-      .text(`Total\n$${total}K`); // displaying total value
+      .text(`Total\n$${formatNumberWithPostfix(total)}`); // displaying total value
   }, [data]);
 
   return <div ref={chartRef} className="donut-chart"></div>;

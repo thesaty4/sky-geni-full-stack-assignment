@@ -33,8 +33,8 @@ export interface DashboardData {
     total: number;
   }>;
   doughnutChart: {
-    totalExisting: number;
-    totalNew: number;
+    existing: number;
+    new: number;
     total: number;
   };
   tableData: FinalResponse;
@@ -85,3 +85,8 @@ export type FinalResponse = {
   data: TableAPIInfo[];
   rowTypes: string[];
 };
+
+export enum CATEGORY_TYPE_ENUM {
+  EXISTING_CUSTOMER = "Existing Customer",
+  NEW_CUSTOMER = "New Customer",
+}

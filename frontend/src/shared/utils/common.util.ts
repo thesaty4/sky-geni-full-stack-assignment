@@ -41,3 +41,42 @@ export function toTitleCase(input: string): string {
     )
     .join(" ");
 }
+
+/**
+ * Formats a number with appropriate metric postfix (K, M, B, etc.)
+ * @param num - The number to format
+ * @param decimals - Number of decimal places to show (default: 1)
+ * @returns Formatted string with metric postfix
+ */
+export const formatNumberWithPostfix = (
+  num: number,
+  decimals: number = 1
+): string => {
+  if (isNaN(num)) return "NaN";
+  if (num === 0) return "0";
+
+  const absNum = Math.abs(num);
+  const sign = num < 0 ? "-" : "";
+
+  const metricPrefixes = [
+    { value: 1e12, symbol: "T" },
+    { value: 1e9, symbol: "B" },
+    { value: 1e6, symbol: "M" },
+    { value: 1e3, symbol: "K" },
+  ];
+
+  // Find the first prefix where the number is larger than the prefix value
+  const prefix = metricPrefixes.find((prefix) => absNum >= prefix.value);
+
+  if (prefix) {
+    // Format the number with the appropriate postfix
+    const formattedNum = (absNum / prefix.value).toFixed(decimals);
+    // Remove trailing .0 if decimals is 0
+    return `${sign}${decimals > 0 ? formattedNum : formattedNum.split(".")[0]}${
+      prefix.symbol
+    }`;
+  }
+
+  // For numbers less than 1000, return as is
+  return `${sign}${absNum}`;
+};

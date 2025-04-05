@@ -1,4 +1,5 @@
 import {
+  CATEGORY_TYPE_ENUM,
   CustomerDataType,
   CustomerTableDataResponseType,
   CustomerType,
@@ -35,12 +36,13 @@ export class CustomerTypeService {
       const existingCustomer = customerTypeData.find(
         (d) =>
           d.closed_fiscal_quarter === quarter &&
-          d.Cust_Type === "Existing Customer"
+          d.Cust_Type === CATEGORY_TYPE_ENUM.EXISTING_CUSTOMER
       ) || { acv: 0 };
 
       const newCustomer = customerTypeData.find(
         (d) =>
-          d.closed_fiscal_quarter === quarter && d.Cust_Type === "New Customer"
+          d.closed_fiscal_quarter === quarter &&
+          d.Cust_Type === CATEGORY_TYPE_ENUM.NEW_CUSTOMER
       ) || { acv: 0 };
 
       return {
@@ -53,18 +55,18 @@ export class CustomerTypeService {
 
     // Compute doughnut chart data
     const totalExistingACV = customerTypeData
-      .filter((d) => d.Cust_Type === "Existing Customer")
+      .filter((d) => d.Cust_Type === CATEGORY_TYPE_ENUM.EXISTING_CUSTOMER)
       .reduce((sum, d) => sum + d.acv, 0);
 
     const totalNewACV = customerTypeData
-      .filter((d) => d.Cust_Type === "New Customer")
+      .filter((d) => d.Cust_Type === CATEGORY_TYPE_ENUM.NEW_CUSTOMER)
       .reduce((sum, d) => sum + d.acv, 0);
 
     return {
       barChart: barChartData,
       doughnutChart: {
-        totalExisting: totalExistingACV,
-        totalNew: totalNewACV,
+        existing: totalExistingACV,
+        new: totalNewACV,
         total: totalExistingACV + totalNewACV,
       },
 

@@ -3,12 +3,13 @@ import D3Chart from "../../shared/components/charts/d3-chart.component";
 import Loader from "../../shared/components/loader.component";
 import SharedTable from "../../shared/components/table/table.component";
 import { useChartInfo } from "./api/chart-api.query";
-import { donutData, stackedBarData } from "./chart-info.mock";
+import { stackedBarData } from "./chart-info.mock";
 import "./chart-info.style.css";
 
 const ChartInfo = () => {
   const {
     isLoading,
+    chartInfo: { donut },
     tableData: { header, dataList },
   } = useChartInfo();
 
@@ -21,7 +22,7 @@ const ChartInfo = () => {
           <D3Chart data={stackedBarData} chartType="bar" />
         </Box>
         <Box component="div">
-          <D3Chart data={donutData} chartType="donut" />
+          <D3Chart data={donut.data} chartType="donut" />
         </Box>
       </Box>
       <Box className="bottom__wrapper" component="div">

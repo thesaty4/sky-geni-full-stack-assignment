@@ -1,3 +1,4 @@
+import { DonutChartData } from "../../../shared/components/charts/d3-donut.component";
 import { TableHeaderType } from "../../../shared/types";
 import { toTitleCase } from "../../../shared/utils/common.util";
 import {
@@ -8,6 +9,7 @@ import {
 } from "./chart-api.const";
 import {
   CustomerDataType,
+  DashboardDataResponse,
   TableAPIInfo,
   TableAPIResponse,
 } from "./chart-api.type";
@@ -16,7 +18,7 @@ import {
  * Class representing a Chart Data Model that transforms API response data
  * into structured header and data lists for table display.
  */
-export class ChartModel {
+export class ChartTableModel {
   /**
    * The header configuration for the table
    * @type {TableHeaderType[]}
@@ -236,5 +238,23 @@ export class ChartModel {
     };
 
     return entry;
+  }
+}
+
+export class ChartDonutModel {
+  data!: DonutChartData[];
+  constructor(input?: DashboardDataResponse["doughnutChart"]) {
+    if (input) {
+      this.data = [
+        {
+          label: "Existing Customer",
+          value: input.existing,
+        },
+        {
+          label: "New Customer",
+          value: input.new,
+        },
+      ];
+    }
   }
 }

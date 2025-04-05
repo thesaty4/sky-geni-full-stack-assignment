@@ -29,8 +29,8 @@ export interface DashboardDataResponse {
     total: number;
   }>;
   doughnutChart: {
-    totalExisting: number;
-    totalNew: number;
+    existing: number;
+    new: number;
     total: number;
   };
   tableData: TableAPIResponse;
