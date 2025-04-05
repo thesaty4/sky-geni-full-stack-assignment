@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import D3Chart from "../../shared/components/charts/d3-chart.component";
 import Loader from "../../shared/components/loader.component";
 import SharedTable from "../../shared/components/table/table.component";
-import { useChartInfo } from "./api/chart-api.query";
+import { useChartInfo } from "./api/table/chart-api.query";
 import { donutData, stackedBarData } from "./chart-info.mock";
 import "./chart-info.style.css";
 

@@ -1,5 +1,5 @@
-import { TableHeaderType } from "../../../shared/types";
-import { toTitleCase } from "../../../shared/utils/common.util";
+import { TableHeaderType } from "../../../../shared/types";
+import { toTitleCase } from "../../../../shared/utils/common.util";
 import {
   INNER_CHILD_POSTFIX_TEXT_MAP,
   INNER_CHILD_PREFIX_TEXT_MAP,
