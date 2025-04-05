@@ -57,10 +57,7 @@ export class ChartModel {
       },
     ];
 
-    const quarterHeaders = this.processQuarters(
-      input.data.data,
-      input.data.total
-    );
+    const quarterHeaders = this.processQuarters(input.data, input.total);
     this.header = [...baseHeader, ...quarterHeaders];
   }
 
@@ -162,7 +159,7 @@ export class ChartModel {
    * @param {TableAPIResponse} input - The API response data
    */
   private initializeDataList(input: TableAPIResponse): void {
-    const { data, total, rowTypes } = input.data;
+    const { data, total, rowTypes } = input;
     this.dataList = [
       ...rowTypes.map((type) => this.createCustomerEntry(type, data, total)),
       this.createTotalEntry(data, total),

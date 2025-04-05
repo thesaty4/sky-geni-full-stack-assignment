@@ -9,7 +9,7 @@ import "./chart-info.style.css";
 const ChartInfo = () => {
   const {
     isLoading,
-    modelData: { header, dataList },
+    tableData: { header, dataList },
   } = useChartInfo();
 
   if (isLoading) <Loader />;

@@ -2,15 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import { apiFetcher } from "../../../shared/api/api-fetcher";
 import { CHART_API_QUERY_KEY } from "./chart-api.const";
 import { ChartModel } from "./chart-api.model";
-import { TableAPIResponse } from "./chart-api.type";
+import { DashboardDataResponse } from "./chart-api.type";
 
 /**
  * Fetches chart information from the API.
  *
  * @returns A promise that resolves to the chart data response.
  */
-const fetchChartInfo = async (): Promise<TableAPIResponse> => {
-  return apiFetcher("/customer-type/table-info");
+const fetchChartInfo = async (): Promise<DashboardDataResponse> => {
+  return apiFetcher("/customer-type/dashboard");
 };
 
 /**
@@ -19,10 +19,10 @@ const fetchChartInfo = async (): Promise<TableAPIResponse> => {
  * @returns Query result along with a `modelData` instance of `ChartModel`.
  */
 export const useChartInfo = () => {
-  const info = useQuery<TableAPIResponse>({
+  const info = useQuery<DashboardDataResponse>({
     queryKey: [CHART_API_QUERY_KEY],
     queryFn: fetchChartInfo,
   });
 
-  return { ...info, modelData: new ChartModel(info.data) };
+  return { ...info, tableData: new ChartModel(info.data?.tableData) };
 };

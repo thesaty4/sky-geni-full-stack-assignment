@@ -16,9 +16,22 @@ export type TableAPIInfo = {
 };
 
 export type TableAPIResponse = {
-  data: {
-    rowTypes: string[];
-    total: TableAPIInfo;
-    data: TableAPIInfo[];
-  };
+  rowTypes: string[];
+  total: TableAPIInfo;
+  data: TableAPIInfo[];
 };
+
+export interface DashboardDataResponse {
+  barChart: Array<{
+    quarter: string;
+    existing: number;
+    new: number;
+    total: number;
+  }>;
+  doughnutChart: {
+    totalExisting: number;
+    totalNew: number;
+    total: number;
+  };
+  tableData: TableAPIResponse;
+}

@@ -67,6 +67,8 @@ export class CustomerTypeService {
         totalNew: totalNewACV,
         total: totalExistingACV + totalNewACV,
       },
+
+      tableData: this.getTableData(),
     };
   }
 

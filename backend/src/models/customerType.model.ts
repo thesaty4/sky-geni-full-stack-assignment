@@ -37,6 +37,7 @@ export interface DashboardData {
     totalNew: number;
     total: number;
   };
+  tableData: FinalResponse;
 }
 
 /**
