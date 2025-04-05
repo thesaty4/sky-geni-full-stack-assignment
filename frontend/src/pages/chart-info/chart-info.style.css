@@ -9,12 +9,46 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    margin:  50px 0;
+    margin:  10px 0;
     flex-wrap: wrap
 }
 
 .top__wrapper .chart-container{ 
     zoom: 0.7;
+}
+
+.header__wrapper{
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.graph__footer__wrapper{
+    display: flex; 
+    gap: 50px;
+    margin: 30px 0;
+    margin-top: 0;
+}
+
+.graph__footer__wrapper .dot__wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.graph__footer__wrapper .dot__wrapper .dot{
+    width: 10px;
+    height: 10px; 
+}
+
+.dot.first{
+    background-color: #1f77b4;
+}
+
+.dot.second{
+    background-color: #ff7f0e;
 }
 
 .bottom__wrapper{
