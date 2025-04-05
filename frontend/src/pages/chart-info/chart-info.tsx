@@ -6,9 +6,20 @@ import "./chart-info.style.css";
 
 const header: TableHeaderType[] = [
   {
+    label: "Closed Financial Year",
+    fieldName: "closeFinancialYear",
+    width: "150px",
+    bgColor: "",
+    children: [
+      {
+        label: "Cust Type",
+        fieldName: "custType",
+      },
+    ],
+  },
+  {
     label: "2023-Q3",
     fieldName: "2023-Q3",
-    prefixText: "$",
     children: [
       {
         label: "Count",
@@ -17,18 +28,19 @@ const header: TableHeaderType[] = [
       {
         label: "ACV",
         fieldName: "acv",
+        prefixText: "$",
       },
       {
         label: "% of Total",
         fieldName: "total",
         postfixText: "%",
+        width: "95px",
       },
     ],
   },
   {
     label: "2023-Q4",
     fieldName: "2023-Q4",
-    prefixText: "$",
     children: [
       {
         label: "Count",
@@ -37,18 +49,20 @@ const header: TableHeaderType[] = [
       {
         label: "ACV",
         fieldName: "acv",
+        prefixText: "$",
       },
       {
         label: "% of Total",
         fieldName: "total",
         postfixText: "%",
+        width: "95px",
       },
     ],
   },
+
   {
-    label: "2023-Q5",
-    fieldName: "2023-Q5",
-    prefixText: "$",
+    label: "Total",
+    fieldName: "total",
     children: [
       {
         label: "Count",
@@ -57,31 +71,13 @@ const header: TableHeaderType[] = [
       {
         label: "ACV",
         fieldName: "acv",
+        prefixText: "$",
       },
       {
         label: "% of Total",
         fieldName: "total",
         postfixText: "%",
-      },
-    ],
-  },
-  {
-    label: "2023-Q6",
-    fieldName: "2023-Q6",
-    prefixText: "$",
-    children: [
-      {
-        label: "Count",
-        fieldName: "count",
-      },
-      {
-        label: "ACV",
-        fieldName: "acv",
-      },
-      {
-        label: "% of Total",
-        fieldName: "total",
-        postfixText: "%",
+        width: "95px",
       },
     ],
   },
@@ -99,6 +95,14 @@ const dataList = [
       acv: 5000,
       total: 20,
     },
+    closeFinancialYear: {
+      custType: "Existing Customer",
+    },
+    total: {
+      count: 100,
+      acv: 5000,
+      total: 20,
+    },
   },
   {
     "2023-Q3": {
@@ -107,6 +111,35 @@ const dataList = [
       total: 20,
     },
     "2023-Q4": {
+      count: 100,
+      acv: 5000,
+      total: 20,
+    },
+    closeFinancialYear: {
+      custType: "New Customer",
+    },
+    total: {
+      count: 100,
+      acv: 5000,
+      total: 20,
+    },
+  },
+
+  {
+    "2023-Q3": {
+      count: 100,
+      acv: 5000,
+      total: 20,
+    },
+    "2023-Q4": {
+      count: 100,
+      acv: 5000,
+      total: 20,
+    },
+    closeFinancialYear: {
+      custType: "Total",
+    },
+    total: {
       count: 100,
       acv: 5000,
       total: 20,
@@ -166,7 +199,7 @@ const ChartInfo = () => {
         </Box>
       </Box>
       <Box className="bottom__wrapper" component="div">
-        <SharedTable headers={header} dataList={dataList} />
+        <SharedTable headers={header} dataList={dataList} isFooterTotal />
       </Box>
     </Box>
   );

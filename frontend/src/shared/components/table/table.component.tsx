@@ -14,6 +14,7 @@ import { get } from "../../utils/common.util";
 import TableHeader from "./table-header.component";
 
 const SharedTable = <T extends Record<string, unknown>>({
+  isFooterTotal,
   headers,
   dataList,
 }: SharedTableProps<T>) => {
@@ -48,22 +49,31 @@ const SharedTable = <T extends Record<string, unknown>>({
           }}
         />
         <TableBody>
-          {sortedRows.map((row, index) => (
-            <TableRow key={index}>
-              {headers.map((header, index) =>
+          {sortedRows.map((row, outerIndex) => (
+            <TableRow
+              key={outerIndex}
+              sx={{ background: outerIndex % 2 ? "#F5F5F5" : "" }}
+            >
+              {headers.map((header, headerIndex) =>
                 header?.children?.map((childHeader, childIndex) => (
                   <TableCell
                     align="center"
-                    key={`${index}-${childIndex}`}
+                    key={`${headerIndex}-${childIndex}`}
                     sx={{
                       border: "1px solid #e0e0e0",
-                      fontWeight: 600,
+                      padding: "5px",
+                      fontWeight:
+                        isFooterTotal && outerIndex === sortedRows.length - 1
+                          ? 600
+                          : 0,
                     }}
                   >
+                    {childHeader?.prefixText}
                     {get(
                       row,
                       `${header.fieldName}.${childHeader.fieldName}` as never
-                    )}
+                    )}{" "}
+                    {childHeader?.postfixText}
                   </TableCell>
                 ))
               )}

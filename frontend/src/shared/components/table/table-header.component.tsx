@@ -56,8 +56,11 @@ const TableHeader = ({ headers, onSort }: TableHeaderProps) => {
         const colSpan = isLeaf ? 1 : getLeavesCount(header);
         const rowSpan = isLeaf ? maxDepth - targetDepth : 1;
 
-        const bgColor = !isLeaf ? (ind % 2 ? "#5B9AD5" : "#4371C4") : "#f5f5f5"; // "#f5f5f5",
-        const textColor = !isLeaf ? "#ffffff" : "";
+        let bgColor = !isLeaf ? (ind % 2 ? "#4371C4" : "#5B9AD5") : "#f5f5f5";
+        let textColor = !isLeaf ? "#ffffff" : "";
+
+        bgColor = header.bgColor === "" ? "" : bgColor;
+        textColor = header.bgColor === "" ? "" : textColor;
 
         return (
           <TableCell
@@ -70,6 +73,8 @@ const TableHeader = ({ headers, onSort }: TableHeaderProps) => {
               backgroundColor: bgColor,
               fontWeight: 600,
               color: textColor,
+              minWidth: header.width,
+              padding: "5px",
             }}
           >
             {isLeaf ? (
@@ -94,37 +99,7 @@ const TableHeader = ({ headers, onSort }: TableHeaderProps) => {
   return (
     <TableHead>
       {Array.from({ length: maxDepth }).map((_, depth) => (
-        <TableRow key={depth}>
-          {/* First column (Cust Type) */}
-          {/* {depth === 0 && (
-            <TableCell
-              rowSpan={maxDepth}
-              align="center"
-              sx={{
-                border: "1px solid #e0e0e0",
-                backgroundColor: "#f5f5f5",
-                fontWeight: 600,
-              }}
-            >
-              Cust Type
-            </TableCell>
-          )} */}
-          {renderHeaderCells(headers, 0, depth)}
-          {/* Last column (Total) */}
-          {/* {depth === 0 && (
-            <TableCell
-              rowSpan={maxDepth}
-              align="center"
-              sx={{
-                border: "1px solid #e0e0e0",
-                backgroundColor: "#f5f5f5",
-                fontWeight: 600,
-              }}
-            >
-              Total
-            </TableCell>
-          )} */}
-        </TableRow>
+        <TableRow key={depth}>{renderHeaderCells(headers, 0, depth)}</TableRow>
       ))}
     </TableHead>
   );

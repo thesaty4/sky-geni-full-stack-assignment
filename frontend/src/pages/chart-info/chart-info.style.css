@@ -1,5 +1,7 @@
 .main__wrapper{
     padding: 50px;
+    padding-top: unset;
+
 }
 
 .top__wrapper{
@@ -8,6 +10,11 @@
     align-items: center;
     margin-bottom: 20px;
     margin:  50px 0;
+    flex-wrap: wrap
+}
+
+.top__wrapper .chart-container{ 
+    zoom: 0.7;
 }
 
 .bottom__wrapper{
