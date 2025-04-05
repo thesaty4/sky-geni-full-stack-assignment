@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { apiFetcher } from "../../../../shared/api/api-fetcher";
+import { apiFetcher } from "../../../shared/api/api-fetcher";
 import { CHART_API_QUERY_KEY } from "./chart-api.const";
 import { ChartModel } from "./chart-api.model";
 import { TableAPIResponse } from "./chart-api.type";
