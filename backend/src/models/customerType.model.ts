@@ -28,9 +28,12 @@ export interface CustomerType {
 export interface DashboardData {
   barChart: Array<{
     quarter: string;
-    existing: number;
-    new: number;
     total: number;
+    values: Array<{
+      label: string;
+      value: number;
+      color?: string;
+    }>;
   }>;
   doughnutChart: {
     existing: number;

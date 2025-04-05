@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 import React, { useEffect, useRef } from "react";
+import { formatNumberWithPostfix } from "../../utils/common.util";
 
 /**
  * Represents a single data point for the stacked bar chart.
@@ -11,7 +12,7 @@ export interface StackChartData {
   total: number;
   /** The breakdown of values for different categories within the quarter. */
   values: {
-    category: string;
+    label: string;
     value: number;
     color: string;
   }[];
@@ -129,7 +130,7 @@ const StackedBarChart: React.FC<StackedBarChartProps> = ({ data }) => {
       .style("fill", "white") // text color
       .style("font-size", "14px") // font size
       .style("font-weight", "bold") // bold text
-      .text((d) => `$${d.value}K`); // display value inside bar
+      .text((d) => `$${formatNumberWithPostfix(d.value)}`); // display value inside bar
 
     // Add total value labels above bars
     barGroups
@@ -141,7 +142,7 @@ const StackedBarChart: React.FC<StackedBarChartProps> = ({ data }) => {
       .style("font-size", "14px") // font size
       .style("font-weight", "bold") // bold text
       .style("fill", "black") // text color
-      .text((d) => `$${d.total}K`); // display total value
+      .text((d) => `$${formatNumberWithPostfix(d.total)}`); // display total value
 
     // Draw the x-axis
     svg

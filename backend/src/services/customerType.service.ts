@@ -2,7 +2,6 @@ import {
   CATEGORY_TYPE_ENUM,
   CustomerDataType,
   CustomerTableDataResponseType,
-  CustomerType,
   DashboardData,
   FinalResponse,
   TableAPIInfo,
@@ -13,14 +12,6 @@ import {
  * Service to handle customer type data processing.
  */
 export class CustomerTypeService {
-  /**
-   * Retrieves all customer type data.
-   * @returns {CustomerType[]} List of customer types.
-   */
-  static getAll(): CustomerType[] {
-    return customerTypeData;
-  }
-
   /**
    * Processes and returns data for the dashboard including bar chart, doughnut chart, and table data.
    * @returns {DashboardData} Processed dashboard data.
@@ -47,9 +38,19 @@ export class CustomerTypeService {
 
       return {
         quarter,
-        existing: existingCustomer.acv,
-        new: newCustomer.acv,
         total: existingCustomer.acv + newCustomer.acv,
+        values: [
+          {
+            label: "Existing Customer",
+            value: existingCustomer.acv,
+            color: "#1f77b4",
+          },
+          {
+            label: "New Customer",
+            value: newCustomer.acv,
+            color: "#ff7f0e",
+          },
+        ],
       };
     });
 

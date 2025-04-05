@@ -1,4 +1,5 @@
 import { DonutChartData } from "../../../shared/components/charts/d3-donut.component";
+import { StackChartData } from "../../../shared/components/charts/d3-stack-bar.component";
 import { TableHeaderType } from "../../../shared/types";
 import { toTitleCase } from "../../../shared/utils/common.util";
 import {
@@ -242,7 +243,7 @@ export class ChartTableModel {
 }
 
 export class ChartDonutModel {
-  data!: DonutChartData[];
+  data: DonutChartData[] = [];
   constructor(input?: DashboardDataResponse["doughnutChart"]) {
     if (input) {
       this.data = [
@@ -255,6 +256,23 @@ export class ChartDonutModel {
           value: input.new,
         },
       ];
+    }
+  }
+}
+
+export class ChartStackModel {
+  data: StackChartData[] = [];
+  constructor(input?: DashboardDataResponse["barChart"]) {
+    if (input) {
+      this.data = input.map((item) => ({
+        quarter: item.quarter ?? "",
+        total: item.total,
+        values: item.values.map((value) => ({
+          label: value.label,
+          value: value.value,
+          color: value.color,
+        })),
+      }));
     }
   }
 }

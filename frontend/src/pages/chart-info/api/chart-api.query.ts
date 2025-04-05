@@ -1,7 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { apiFetcher } from "../../../shared/api/api-fetcher";
 import { CHART_API_QUERY_KEY } from "./chart-api.const";
-import { ChartDonutModel, ChartTableModel } from "./chart-api.model";
+import {
+  ChartDonutModel,
+  ChartStackModel,
+  ChartTableModel,
+} from "./chart-api.model";
 import { DashboardDataResponse } from "./chart-api.type";
 
 /**
@@ -28,6 +32,7 @@ export const useChartInfo = () => {
     ...info,
     tableData: new ChartTableModel(info.data?.tableData),
     chartInfo: {
+      bar: new ChartStackModel(info.data?.barChart),
       donut: new ChartDonutModel(info.data?.doughnutChart),
     },
   };

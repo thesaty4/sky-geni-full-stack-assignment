@@ -24,9 +24,12 @@ export type TableAPIResponse = {
 export interface DashboardDataResponse {
   barChart: Array<{
     quarter: string;
-    existing: number;
-    new: number;
     total: number;
+    values: Array<{
+      label: string;
+      value: number;
+      color: string;
+    }>;
   }>;
   doughnutChart: {
     existing: number;
