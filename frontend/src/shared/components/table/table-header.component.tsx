@@ -64,7 +64,7 @@ const TableHeader = ({ headers, onSort }: TableHeaderProps) => {
 
         return (
           <TableCell
-            key={header.fieldName}
+            key={`-${header.fieldName}`}
             colSpan={colSpan}
             rowSpan={rowSpan}
             align="center"

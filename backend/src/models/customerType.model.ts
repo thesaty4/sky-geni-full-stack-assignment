@@ -82,4 +82,5 @@ export type CustomerDataType = {
 export type FinalResponse = {
   total: TableAPIInfo & Partial<Pick<TableAPIInfo, "quarter">>;
   data: TableAPIInfo[];
+  rowTypes: string[];
 };

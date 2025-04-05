@@ -78,6 +78,9 @@ export class CustomerTypeService {
    * @returns {FinalResponse} Formatted and sorted customer type table data.
    */
   static getTableData(): FinalResponse {
+    // row type extracted
+    const rowTypes = new Set(customerTypeData.map((d) => d.Cust_Type));
+
     // Sort customer data by fiscal quarter in ascending order
     const sortedCustomerData = [...customerTypeData].sort((a, b) =>
       a.closed_fiscal_quarter.localeCompare(b.closed_fiscal_quarter)
@@ -178,7 +181,9 @@ export class CustomerTypeService {
     });
 
     return {
+      rowTypes: Array.from(rowTypes),
       total: {
+        quarter: "total",
         subDataInfo: {
           totalInfo: {
             type: "total",
