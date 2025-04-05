@@ -3,6 +3,12 @@ import { JSX, useState } from "react";
 import { TableHeaderType } from "../../types";
 import { ExtendedString } from "../../types/util.type";
 
+/**
+ * Props for the TableHeader component
+ * @typedef {Object} TableHeaderProps
+ * @property {TableHeaderType[]} headers - Array of header configurations
+ * @property {Function} [onSort] - Callback function for sort events
+ */
 type TableHeaderProps = {
   headers: TableHeaderType[];
   onSort?: (config: {
@@ -11,15 +17,30 @@ type TableHeaderProps = {
   }) => void;
 };
 
+/**
+ * Table header component that renders a multi-level header with sorting capability
+ * @param {TableHeaderProps} props - Component props
+ * @returns {JSX.Element} The table header element
+ */
 const TableHeader = ({ headers, onSort }: TableHeaderProps) => {
   const [order, setOrder] = useState<"asc" | "desc">("asc");
   const [orderBy, setOrderBy] = useState<string>("");
 
+  /**
+   * Calculates the depth of a header structure
+   * @param {TableHeaderType} header - Header item to calculate depth for
+   * @returns {number} Maximum depth of the header structure
+   */
   const getDepth = (header: TableHeaderType): number => {
     if (!header.children) return 1;
     return 1 + Math.max(...header.children.map(getDepth));
   };
 
+  /**
+   * Counts the number of leaf nodes in a header structure
+   * @param {TableHeaderType} header - Header item to count leaves for
+   * @returns {number} Number of leaf nodes
+   */
   const getLeavesCount = (header: TableHeaderType): number => {
     if (!header.children) return 1;
     return header.children.reduce(
@@ -30,6 +51,10 @@ const TableHeader = ({ headers, onSort }: TableHeaderProps) => {
 
   const maxDepth = Math.max(...headers.map(getDepth));
 
+  /**
+   * Handles sort column click events
+   * @param {string} column - Column field name to sort by
+   */
   const handleSort = (column: string) => {
     const newOrder = orderBy === column && order === "asc" ? "desc" : "asc";
     setOrder(newOrder);
@@ -37,17 +62,28 @@ const TableHeader = ({ headers, onSort }: TableHeaderProps) => {
     onSort?.({ order: newOrder, orderBy: column });
   };
 
+  /**
+   * Recursively renders header cells
+   * @param {TableHeaderType[]} headers - Array of header items to render
+   * @param {number} currentDepth - Current recursion depth
+   * @param {number} targetDepth - Target depth to render
+   * @param {string} parentKey - Key prefix for React keys
+   * @returns {JSX.Element[]} Array of header cell elements
+   */
   const renderHeaderCells = (
     headers: TableHeaderType[],
     currentDepth: number,
-    targetDepth: number
+    targetDepth: number,
+    parentKey: string
   ): JSX.Element[] => {
     return headers.flatMap((header, ind) => {
+      const currentKey = `${parentKey}-${header.fieldName}-${ind}`;
       if (currentDepth < targetDepth && header.children) {
         return renderHeaderCells(
           header.children,
           currentDepth + 1,
-          targetDepth
+          targetDepth,
+          currentKey
         );
       }
 
@@ -64,7 +100,7 @@ const TableHeader = ({ headers, onSort }: TableHeaderProps) => {
 
         return (
           <TableCell
-            key={`-${header.fieldName}`}
+            key={currentKey}
             colSpan={colSpan}
             rowSpan={rowSpan}
             align="center"
@@ -99,7 +135,9 @@ const TableHeader = ({ headers, onSort }: TableHeaderProps) => {
   return (
     <TableHead>
       {Array.from({ length: maxDepth }).map((_, depth) => (
-        <TableRow key={depth}>{renderHeaderCells(headers, 0, depth)}</TableRow>
+        <TableRow key={`depth-${depth}`}>
+          {renderHeaderCells(headers, 0, depth, `depth-${depth}`)}
+        </TableRow>
       ))}
     </TableHead>
   );
