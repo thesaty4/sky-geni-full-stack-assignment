@@ -25,23 +25,6 @@ export interface CustomerType {
 }
 
 // Interface for processed data for the dashboard
-export interface DashboardData {
-  barChart: Array<{
-    quarter: string;
-    total: number;
-    values: Array<{
-      label: string;
-      value: number;
-      color?: string;
-    }>;
-  }>;
-  doughnutChart: {
-    existing: number;
-    new: number;
-    total: number;
-  };
-  tableData: FinalResponse;
-}
 
 /**
  * Represents grouped customer table data response.
@@ -92,4 +75,11 @@ export type FinalResponse = {
 export enum CATEGORY_TYPE_ENUM {
   EXISTING_CUSTOMER = "Existing Customer",
   NEW_CUSTOMER = "New Customer",
+}
+
+export enum MODULE_NAMES {
+  CUSTOMER = "customer",
+  ACCOUNT = "account",
+  ACV = "acv",
+  TEAM = "team",
 }

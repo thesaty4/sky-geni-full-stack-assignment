@@ -22,7 +22,7 @@ const ChartInfo = () => {
     isLoading,
     chartInfo: { donut, bar },
     tableData: { header, dataList },
-  } = useChartInfo();
+  } = useChartInfo(`?module=${module}`);
 
   /**
    * Sets module information based on route parameter

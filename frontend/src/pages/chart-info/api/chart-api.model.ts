@@ -246,16 +246,12 @@ export class ChartDonutModel {
   data: DonutChartData[] = [];
   constructor(input?: DashboardDataResponse["doughnutChart"]) {
     if (input) {
-      this.data = [
-        {
-          label: "Existing Customer",
-          value: input.existing,
-        },
-        {
-          label: "New Customer",
-          value: input.new,
-        },
-      ];
+      this.data = Object.entries(input)
+        .filter(([key]) => key !== "total")
+        .map(([key, value]) => ({
+          label: key,
+          value: value,
+        }));
     }
   }
 }

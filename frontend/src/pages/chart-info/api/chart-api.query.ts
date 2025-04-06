@@ -13,8 +13,10 @@ import { DashboardDataResponse } from "./chart-api.type";
  *
  * @returns A promise that resolves to the chart data response.
  */
-const fetchChartInfo = async (): Promise<DashboardDataResponse> => {
-  return apiFetcher("/customer-type/dashboard");
+const fetchChartInfo = async (
+  queryParams: string
+): Promise<DashboardDataResponse> => {
+  return apiFetcher(`/customer-type/dashboard${queryParams}`);
 };
 
 /**
@@ -22,10 +24,10 @@ const fetchChartInfo = async (): Promise<DashboardDataResponse> => {
  *
  * @returns Query result along with a `modelData` instance of `ChartModel`.
  */
-export const useChartInfo = () => {
+export const useChartInfo = (queryParams: string) => {
   const info = useQuery<DashboardDataResponse>({
     queryKey: [CHART_API_QUERY_KEY],
-    queryFn: fetchChartInfo,
+    queryFn: () => fetchChartInfo(queryParams),
   });
 
   return {

@@ -1,12 +1,18 @@
 import {
+  AllFileTypes,
+  DashboardData,
+  MODULE_WISE_MAPPER,
+} from "../models/common.model";
+import {
   CATEGORY_TYPE_ENUM,
   CustomerDataType,
   CustomerTableDataResponseType,
-  DashboardData,
   FinalResponse,
+  MODULE_NAMES,
   TableAPIInfo,
   customerTypeData,
 } from "../models/customerType.model";
+import { getRandomColor } from "../shared/utils/common.util";
 
 /**
  * Service to handle customer type data processing.
@@ -16,41 +22,35 @@ export class CustomerTypeService {
    * Processes and returns data for the dashboard including bar chart, doughnut chart, and table data.
    * @returns {DashboardData} Processed dashboard data.
    */
-  static getDashboardData(): DashboardData {
+  static getDashboardData(moduleName: MODULE_NAMES): DashboardData {
+    const { type, quarter } = MODULE_WISE_MAPPER[moduleName];
+    const fileData = MODULE_WISE_MAPPER[moduleName].fileData as Required<
+      AllFileTypes[]
+    >;
     // Extract unique quarters and sort them chronologically
     const quarters = [
-      ...new Set(customerTypeData.map((d) => d.closed_fiscal_quarter)),
+      ...new Set(fileData.map((d) => d.closed_fiscal_quarter)),
     ].sort();
 
+    const allType = [...new Set(fileData.map((fType) => fType[type]))];
     // Prepare bar chart data
-    const barChartData = quarters.map((quarter) => {
-      const existingCustomer = customerTypeData.find(
-        (d) =>
-          d.closed_fiscal_quarter === quarter &&
-          d.Cust_Type === CATEGORY_TYPE_ENUM.EXISTING_CUSTOMER
-      ) || { acv: 0 };
-
-      const newCustomer = customerTypeData.find(
-        (d) =>
-          d.closed_fiscal_quarter === quarter &&
-          d.Cust_Type === CATEGORY_TYPE_ENUM.NEW_CUSTOMER
-      ) || { acv: 0 };
+    const barChartData = quarters.map((quarterKey) => {
+      const allValuesQuarterly = allType.map(
+        (avq) =>
+          fileData.find((d) => d[quarter] === quarterKey && avq === d[type]) ||
+          ({
+            acv: 0,
+          } as AllFileTypes)
+      );
 
       return {
-        quarter,
-        total: existingCustomer.acv + newCustomer.acv,
-        values: [
-          {
-            label: "Existing Customer",
-            value: existingCustomer.acv,
-            color: "#1f77b4",
-          },
-          {
-            label: "New Customer",
-            value: newCustomer.acv,
-            color: "#ff7f0e",
-          },
-        ],
+        quarter: quarterKey,
+        total: allValuesQuarterly.reduce((pre, curr) => pre + curr.acv, 0),
+        values: allValuesQuarterly.map((values, ind) => ({
+          label: values[type],
+          value: values.acv,
+          color: ind > 1 ? getRandomColor() : ind % 2 ? "#1f77b4" : "#ff7f0e",
+        })),
       };
     });
 
@@ -63,14 +63,19 @@ export class CustomerTypeService {
       .filter((d) => d.Cust_Type === CATEGORY_TYPE_ENUM.NEW_CUSTOMER)
       .reduce((sum, d) => sum + d.acv, 0);
 
-    return {
-      barChart: barChartData,
-      doughnutChart: {
-        existing: totalExistingACV,
-        new: totalNewACV,
-        total: totalExistingACV + totalNewACV,
+    let totalAVC = allType.reduce(
+      (prev, d) => {
+        const acv = fileData
+          .filter((f) => f[type] === d)
+          .reduce((sum, d) => sum + d.acv, 0);
+        return { ...prev, total: prev.total + acv, [d]: acv };
       },
+      { total: 0 }
+    );
 
+    return {
+      barChart: barChartData as any,
+      doughnutChart: totalAVC,
       tableData: this.getTableData(),
     };
   }
