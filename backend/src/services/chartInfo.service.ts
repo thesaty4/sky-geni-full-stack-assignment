@@ -14,13 +14,17 @@ import {
 } from "../models/customerType.model";
 import { getRandomColor } from "../shared/utils/common.util";
 
-/**
- * Service to handle customer type data processing.
- */
 export class ChartInfoService {
   /**
-   * Processes and returns data for the dashboard including bar chart, doughnut chart, and table data.
-   * @returns {DashboardData} Processed dashboard data.
+   * Transforms raw module data into dashboard visualization formats
+   *
+   * @static
+   * @param {MODULE_NAMES} moduleName - The module identifier to process data for
+   * @returns {DashboardData} Object containing bar chart, doughnut chart, and table data
+   *
+   * @property {Array} barChart - Quarterly ACV data with customer type breakdown
+   * @property {Object} doughnutChart - Total ACV distribution by customer type
+   * @property {FinalResponse} tableData - Detailed quarterly metrics
    */
   static getDashboardData(moduleName: MODULE_NAMES): DashboardData {
     const { type, quarter } = MODULE_WISE_MAPPER[moduleName];
@@ -81,11 +85,25 @@ export class ChartInfoService {
   }
 
   /**
-   * Generates and returns sorted table data for customer types, categorized by fiscal quarter.
-   * The data includes total counts and ACV (Annual Contract Value) for each customer type
-   * along with computed percentage distributions.
+   * Processes raw customer data into structured table format with calculated metrics
    *
-   * @returns {FinalResponse} Formatted and sorted customer type table data.
+   * @static
+   * @param {MODULE_NAMES} moduleName - The module identifier to process
+   * @returns {FinalResponse} Structured response containing:
+   *
+   * @property {Array<string>} rowTypes - Unique customer types in dataset
+   * @property {TableAPIInfo} total - Aggregated totals across all quarters
+   * @property {Array<TableAPIInfo>} data - Sorted quarterly metrics including:
+   *   - ACV and count values
+   *   - Percentage distributions
+   *   - Quarterly totals
+   *
+   * @description
+   * Performs the following transformations:
+   * 1. Groups records by fiscal quarter and customer type
+   * 2. Calculates percentage distributions
+   * 3. Aggregates grand totals
+   * 4. Sorts quarters chronologically
    */
   static getTableData(moduleName: MODULE_NAMES): FinalResponse {
     const { type, quarter: configQuatre } = MODULE_WISE_MAPPER[moduleName];
@@ -96,16 +114,14 @@ export class ChartInfoService {
     // row type extracted
     const rowTypes = new Set(fileData.map((d) => d[type]));
 
-    // Sort customer data by fiscal quarter in ascending order
+    // Sort dynamic data by fiscal quarter in ascending order
     const sortedCustomerData = [...fileData].sort((a, b) =>
       a[configQuatre]?.toString().localeCompare(b[configQuatre]?.toString())
     );
 
-    // Group records by quarter and customer type
+    // Group records by quarter and dynamic type
     const groupedRecords = sortedCustomerData.reduce((acc, curr) => {
-      // const { closed_fiscal_quarter: quarter, Cust_Type } = curr;
-      // curr[type]
-      // Initialize quarter and customer type if not present
+      // Initialize quarter and dynamic type if not present
       if (!acc[curr[configQuatre]]) acc[curr[configQuatre]] = {};
       if (!acc[curr[configQuatre]][curr[type]]) {
         acc[curr[configQuatre]][curr[type]] = {
@@ -114,7 +130,7 @@ export class ChartInfoService {
         };
       }
 
-      // Accumulate customer count and ACV
+      // Accumulate dynamic count and ACV
       acc[curr[configQuatre]][curr[type]].data.count += curr.count;
       acc[curr[configQuatre]][curr[type]].data.acv += curr.acv;
 
@@ -123,7 +139,7 @@ export class ChartInfoService {
 
     let grandTotalACV = 0;
     let grandTotalCount = 0;
-    const totalCustomerTypeData: Record<string, CustomerDataType> = {};
+    const totalEntityTypeData: Record<string, CustomerDataType> = {};
 
     // Transform grouped records into a structured response
     const formattedTableData: TableAPIInfo[] = Object.entries(
@@ -132,22 +148,22 @@ export class ChartInfoService {
       let totalACV = 0;
       let totalCount = 0;
 
-      // Process each customer type within the quarter
-      const customerEntries = Object.entries(data).map(([cType, cData]) => {
+      // Process each dynamic type within the quarter
+      const entityEntries = Object.entries(data).map(([cType, cData]) => {
         totalACV += cData.data.acv;
         totalCount += cData.data.count;
 
         // Track cumulative total across all quarters
-        if (!totalCustomerTypeData[cType]) {
-          totalCustomerTypeData[cType] = {
+        if (!totalEntityTypeData[cType]) {
+          totalEntityTypeData[cType] = {
             type: cType,
             totalPercentage: 0,
             data: { count: 0, acv: 0 },
           };
         }
 
-        totalCustomerTypeData[cType].data.count += cData.data.count;
-        totalCustomerTypeData[cType].data.acv += cData.data.acv;
+        totalEntityTypeData[cType].data.count += cData.data.count;
+        totalEntityTypeData[cType].data.acv += cData.data.acv;
 
         return {
           type: cType,
@@ -157,7 +173,7 @@ export class ChartInfoService {
       });
 
       // Compute percentage share for each customer type in the quarter
-      customerEntries.forEach((entry) => {
+      entityEntries.forEach((entry) => {
         entry.totalPercentage = totalACV
           ? Math.round((entry.data.acv / totalACV) * 100)
           : 0;
@@ -175,13 +191,13 @@ export class ChartInfoService {
             totalPercentage: 100,
             data: { count: totalCount, acv: totalACV },
           },
-          dataList: customerEntries,
+          dataList: entityEntries,
         },
       };
     });
 
     // Compute overall totals across all quarters
-    const totalDataList = Object.values(totalCustomerTypeData).map((entry) => ({
+    const totalDataList = Object.values(totalEntityTypeData).map((entry) => ({
       ...entry,
       totalPercentage: grandTotalACV
         ? Math.round((entry.data.acv / grandTotalACV) * 100)
