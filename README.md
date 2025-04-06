@@ -115,5 +115,20 @@ npm run dev
 ---
 
 ## 📸 Screenshots
+# MAIN UI 
+<img width="1217" alt="Screenshot 2025-04-06 at 10 10 33 AM" src="https://github.com/user-attachments/assets/ddacc68e-3eff-4a94-81d5-04538c7f39d0" />
+
+# Won ACV mix by Customer Type
+<img width="1469" alt="Screenshot 2025-04-06 at 10 11 12 AM" src="https://github.com/user-attachments/assets/ea89884e-377c-4143-bfd9-985306e701a8" />
+
+# Won ACV mix by ACV Range
+<img width="1466" alt="Screenshot 2025-04-06 at 10 11 48 AM" src="https://github.com/user-attachments/assets/4e247df1-c7c7-497e-a4af-8d29d6aafd37" />
+
+# Won ACV mix by Team
+<img width="1468" alt="Screenshot 2025-04-06 at 10 12 21 AM" src="https://github.com/user-attachments/assets/bd828379-7260-40cb-9c63-3d0925bd3f03" />
+
+#Won ACV mix by Account Industry
+<img width="1466" alt="Screenshot 2025-04-06 at 10 13 09 AM" src="https://github.com/user-attachments/assets/f23d6f55-2f0d-4ed8-b6a4-41f511045db2" />
+
 
 
