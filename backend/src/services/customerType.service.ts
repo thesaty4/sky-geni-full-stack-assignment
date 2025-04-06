@@ -76,7 +76,7 @@ export class CustomerTypeService {
     return {
       barChart: barChartData as any,
       doughnutChart: totalAVC,
-      tableData: this.getTableData(),
+      tableData: this.getTableData(moduleName),
     };
   }
 
@@ -87,31 +87,36 @@ export class CustomerTypeService {
    *
    * @returns {FinalResponse} Formatted and sorted customer type table data.
    */
-  static getTableData(): FinalResponse {
+  static getTableData(moduleName: MODULE_NAMES): FinalResponse {
+    const { type, quarter: configQuatre } = MODULE_WISE_MAPPER[moduleName];
+    const fileData = MODULE_WISE_MAPPER[moduleName].fileData as Required<
+      AllFileTypes[]
+    >;
+
     // row type extracted
-    const rowTypes = new Set(customerTypeData.map((d) => d.Cust_Type));
+    const rowTypes = new Set(fileData.map((d) => d[type]));
 
     // Sort customer data by fiscal quarter in ascending order
-    const sortedCustomerData = [...customerTypeData].sort((a, b) =>
-      a.closed_fiscal_quarter.localeCompare(b.closed_fiscal_quarter)
+    const sortedCustomerData = [...fileData].sort((a, b) =>
+      a[configQuatre]?.toString().localeCompare(b[configQuatre]?.toString())
     );
 
     // Group records by quarter and customer type
     const groupedRecords = sortedCustomerData.reduce((acc, curr) => {
-      const { closed_fiscal_quarter: quarter, Cust_Type } = curr;
-
+      // const { closed_fiscal_quarter: quarter, Cust_Type } = curr;
+      // curr[type]
       // Initialize quarter and customer type if not present
-      if (!acc[quarter]) acc[quarter] = {};
-      if (!acc[quarter][Cust_Type]) {
-        acc[quarter][Cust_Type] = {
+      if (!acc[curr[configQuatre]]) acc[curr[configQuatre]] = {};
+      if (!acc[curr[configQuatre]][curr[type]]) {
+        acc[curr[configQuatre]][curr[type]] = {
           totalPercentage: 0,
           data: { count: 0, acv: 0 },
         };
       }
 
       // Accumulate customer count and ACV
-      acc[quarter][Cust_Type].data.count += curr.count;
-      acc[quarter][Cust_Type].data.acv += curr.acv;
+      acc[curr[configQuatre]][curr[type]].data.count += curr.count;
+      acc[curr[configQuatre]][curr[type]].data.acv += curr.acv;
 
       return acc;
     }, {} as CustomerTableDataResponseType);
