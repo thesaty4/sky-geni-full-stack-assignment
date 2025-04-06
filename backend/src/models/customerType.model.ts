@@ -24,8 +24,6 @@ export interface CustomerType {
   Cust_Type: string;
 }
 
-// Interface for processed data for the dashboard
-
 /**
  * Represents grouped customer table data response.
  */

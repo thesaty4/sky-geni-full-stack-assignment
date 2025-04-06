@@ -4,11 +4,7 @@ import SharedBreadcrumbs from "../../shared/components/breadcrumb.component";
 
 const CartLayout = () => {
   return (
-    <Box
-      sx={{
-        backgroundColor: "#f5f5f5",
-      }}
-    >
+    <Box sx={{ backgroundColor: "#f5f5f5" }}>
       {/* Top App Bar */}
       <AppBar position="static" sx={{ width: "100%", padding: "10px" }}>
         <Toolbar>

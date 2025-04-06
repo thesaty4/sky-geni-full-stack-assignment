@@ -1,4 +1,3 @@
-// src/routes/customerTypeRoutes.ts
 import { Router } from "express";
 import { ChartInfoController } from "../controllers/chartInfo.controller";
 

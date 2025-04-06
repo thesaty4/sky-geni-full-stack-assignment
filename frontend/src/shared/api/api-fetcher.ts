@@ -1,3 +1,4 @@
+// TODO: Move this to a shared .env file
 const API_ROOT = "http://localhost:3000/api/v1";
 
 export const apiFetcher = async <T>(
