@@ -14,13 +14,6 @@ const cardData: CardListType[] = [
     routeTo: `${MODULE_NAMES.CUSTOMER}`,
   },
   {
-    title: "Account Industry",
-    description:
-      "View graphs and table data related to different account industries, providing valuable insights, Click to see account related info.",
-    image: "/images/chart.webp",
-    routeTo: `${MODULE_NAMES.ACCOUNT}`,
-  },
-  {
     title: "ACV Range",
     description:
       "Analyze the Annual Contract Value (ACV) distribution across various accounts using graphical data.",
@@ -34,6 +27,13 @@ const cardData: CardListType[] = [
       "Manage and oversee team structures, roles, and performance through insightful data visualizations.",
     image: "/images/light-graph.webp",
     routeTo: `${MODULE_NAMES.TEAM}`,
+  },
+  {
+    title: "Account Industry",
+    description:
+      "View graphs and table data related to different account industries, providing valuable insights, Click to see account related info.",
+    image: "/images/chart.webp",
+    routeTo: `${MODULE_NAMES.ACCOUNT}`,
   },
 ];
 

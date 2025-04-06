@@ -72,8 +72,6 @@ const ChartInfo = () => {
         {colorMapping?.map((item) => (
           <LegendItem color={item.color} label={item.type} />
         ))}
-        {/* <LegendItem colorClass="first" label="Existing Customer" />
-        <LegendItem colorClass="second" label="New Customer" /> */}
       </Box>
 
       {/* Data Table Section */}
