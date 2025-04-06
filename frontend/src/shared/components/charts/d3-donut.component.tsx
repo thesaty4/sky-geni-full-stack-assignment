@@ -10,6 +10,7 @@ export interface DonutChartData {
   label: string;
   /** The numerical value associated with the segment. */
   value: number;
+  color?: string;
 }
 
 /**
@@ -72,7 +73,7 @@ const DonutChart: React.FC<DonutChartProps> = ({ data }) => {
       .data(pie(data)) // binding data to the pie layout
       .join("path") // joining data to path elements
       .attr("d", arc) // creating the arc shape
-      .attr("fill", (_d, i) => color(i.toString())) // filling with color
+      .attr("fill", (_d, i) => _d.data.color ?? color(i.toString())) // filling with color
       .style("stroke", "#fff") // adding stroke color
       .style("stroke-width", "2px"); // adding stroke width
 

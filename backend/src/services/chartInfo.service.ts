@@ -31,6 +31,8 @@ export class ChartInfoService {
     const fileData = MODULE_WISE_MAPPER[moduleName].fileData as Required<
       AllFileTypes[]
     >;
+    const rowWiseInfo = new Map();
+
     // Extract unique quarters and sort them chronologically
     const quarters = [
       ...new Set(fileData.map((d) => d.closed_fiscal_quarter)),
@@ -53,7 +55,12 @@ export class ChartInfoService {
         values: allValuesQuarterly.map((values, ind) => ({
           label: values[type],
           value: values.acv,
-          color: ind > 1 ? getRandomColor() : ind % 2 ? "#1f77b4" : "#ff7f0e",
+          color: rowWiseInfo
+            .set(
+              values[type],
+              ind > 1 ? getRandomColor() : ind % 2 ? "#1f77b4" : "#ff7f0e"
+            )
+            .get(values[type]),
         })),
       };
     });
@@ -80,7 +87,10 @@ export class ChartInfoService {
     return {
       barChart: barChartData as any,
       doughnutChart: totalAVC,
-      tableData: this.getTableData(moduleName),
+      tableData: this.getTableData(
+        moduleName,
+        Array.from(rowWiseInfo.entries())
+      ),
     };
   }
 
@@ -105,14 +115,14 @@ export class ChartInfoService {
    * 3. Aggregates grand totals
    * 4. Sorts quarters chronologically
    */
-  static getTableData(moduleName: MODULE_NAMES): FinalResponse {
+  static getTableData(
+    moduleName: MODULE_NAMES,
+    rowWiseInfo: [string, string][]
+  ): FinalResponse {
     const { type, quarter: configQuatre } = MODULE_WISE_MAPPER[moduleName];
     const fileData = MODULE_WISE_MAPPER[moduleName].fileData as Required<
       AllFileTypes[]
     >;
-
-    // row type extracted
-    const rowTypes = new Set(fileData.map((d) => d[type]));
 
     // Sort dynamic data by fiscal quarter in ascending order
     const sortedCustomerData = [...fileData].sort((a, b) =>
@@ -211,8 +221,18 @@ export class ChartInfoService {
       return yearA !== yearB ? yearA - yearB : quarterA - quarterB;
     });
 
+    const rowTypes = rowWiseInfo
+      .filter(([key]) => key !== undefined)
+      .map(
+        ([key, value]) =>
+          ({
+            color: value,
+            type: key,
+          } as FinalResponse["rowTypes"][number])
+      );
+
     return {
-      rowTypes: Array.from(rowTypes),
+      rowTypes,
       total: {
         quarter: "total",
         subDataInfo: {

@@ -22,6 +22,7 @@ const ChartInfo = () => {
     isLoading,
     chartInfo: { donut, bar },
     tableData: { header, dataList },
+    colorMapping,
   } = useChartInfo(`?module=${module}`);
 
   /**
@@ -68,8 +69,11 @@ const ChartInfo = () => {
 
       {/* Chart Legend */}
       <Box className="graph__footer__wrapper">
-        <LegendItem colorClass="first" label="Existing Customer" />
-        <LegendItem colorClass="second" label="New Customer" />
+        {colorMapping?.map((item) => (
+          <LegendItem color={item.color} label={item.type} />
+        ))}
+        {/* <LegendItem colorClass="first" label="Existing Customer" />
+        <LegendItem colorClass="second" label="New Customer" /> */}
       </Box>
 
       {/* Data Table Section */}
@@ -88,19 +92,13 @@ const ChartInfo = () => {
 /**
  * Component for displaying a chart legend item
  * @param {Object} props - Component props
- * @param {string} props.colorClass - CSS class for the color dot
+ * @param {string} props.color - CSS class for the color dot
  * @param {string} props.label - Text label for the legend item
  * @returns {JSX.Element} Legend item component
  */
-const LegendItem = ({
-  colorClass,
-  label,
-}: {
-  colorClass: string;
-  label: string;
-}) => (
+const LegendItem = ({ color, label }: { color: string; label: string }) => (
   <Box className="dot__wrapper">
-    <Box className={`dot ${colorClass}`} />
+    <Box className={`dot  `} sx={{ backgroundColor: color }} />
     <Typography variant="body1" className="footer__sub-title">
       {label}
     </Typography>

@@ -16,7 +16,7 @@ export type TableAPIInfo = {
 };
 
 export type TableAPIResponse = {
-  rowTypes: string[];
+  rowTypes: { color: string; type: string }[];
   total: TableAPIInfo;
   data: TableAPIInfo[];
 };

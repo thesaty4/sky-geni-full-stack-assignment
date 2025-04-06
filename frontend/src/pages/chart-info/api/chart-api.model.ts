@@ -164,7 +164,9 @@ export class ChartTableModel {
   private initializeDataList(input: TableAPIResponse): void {
     const { data, total, rowTypes } = input;
     this.dataList = [
-      ...rowTypes.map((type) => this.createCustomerEntry(type, data, total)),
+      ...rowTypes.map((type) =>
+        this.createCustomerEntry(type.type, data, total)
+      ),
       this.createTotalEntry(data, total),
     ];
   }
@@ -244,13 +246,20 @@ export class ChartTableModel {
 
 export class ChartDonutModel {
   data: DonutChartData[] = [];
-  constructor(input?: DashboardDataResponse["doughnutChart"]) {
-    if (input) {
-      this.data = Object.entries(input)
+  constructor(input?: DashboardDataResponse) {
+    if (input?.doughnutChart) {
+      const {
+        doughnutChart,
+        tableData: { rowTypes },
+      } = input;
+      this.data = Object.entries(doughnutChart)
         .filter(([key]) => key !== "total")
         .map(([key, value]) => ({
           label: key,
           value: value,
+
+          // exactly same color for the donut chart
+          color: rowTypes.find((item) => item.type === key)?.color || "",
         }));
     }
   }
@@ -258,9 +267,10 @@ export class ChartDonutModel {
 
 export class ChartStackModel {
   data: StackChartData[] = [];
-  constructor(input?: DashboardDataResponse["barChart"]) {
-    if (input) {
-      this.data = input.map((item) => ({
+  constructor(input?: DashboardDataResponse) {
+    if (input?.barChart) {
+      const { barChart } = input;
+      this.data = barChart.map((item) => ({
         quarter: item.quarter ?? "",
         total: item.total,
         values: item.values.map((value) => ({

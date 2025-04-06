@@ -34,8 +34,9 @@ export const useChartInfo = (queryParams: string) => {
     ...info,
     tableData: new ChartTableModel(info.data?.tableData),
     chartInfo: {
-      bar: new ChartStackModel(info.data?.barChart),
-      donut: new ChartDonutModel(info.data?.doughnutChart),
+      bar: new ChartStackModel(info.data),
+      donut: new ChartDonutModel(info.data),
     },
+    colorMapping: info.data?.tableData?.rowTypes,
   };
 };

@@ -67,7 +67,7 @@ export type CustomerDataType = {
 export type FinalResponse = {
   total: TableAPIInfo & Partial<Pick<TableAPIInfo, "quarter">>;
   data: TableAPIInfo[];
-  rowTypes: string[];
+  rowTypes: { color: string; type: string }[];
 };
 
 export enum CATEGORY_TYPE_ENUM {
