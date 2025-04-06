@@ -17,7 +17,7 @@ import { getRandomColor } from "../shared/utils/common.util";
 /**
  * Service to handle customer type data processing.
  */
-export class CustomerTypeService {
+export class ChartInfoService {
   /**
    * Processes and returns data for the dashboard including bar chart, doughnut chart, and table data.
    * @returns {DashboardData} Processed dashboard data.

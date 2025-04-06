@@ -1,16 +1,16 @@
 // src/controllers/customerTypeController.ts
 import { Request, Response } from "express";
 import { MODULE_NAMES } from "../models/customerType.model";
-import { CustomerTypeService } from "../services/customerType.service";
+import { ChartInfoService } from "../services/chartInfo.service";
 
-// Controller for Customer Type data
-export class CustomerTypeController {
+// Controller for Chart Info
+export class ChartInfoController {
   // Get processed data for the dashboard (bar chart, doughnut chart, and table)
 
   static async getDashboardData(req: Request, res: Response) {
     const { query } = req;
     try {
-      const dashboardData = CustomerTypeService.getDashboardData(
+      const dashboardData = ChartInfoService.getDashboardData(
         query.module as MODULE_NAMES
       );
       res.status(200).json(dashboardData);
